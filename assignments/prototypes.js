@@ -56,6 +56,28 @@ Humanoid.prototype = Object.create(CharacterStats.prototype);
 Humanoid.prototype.greet = function() {
   return `${this.name} offers a greeting in ${this.language}.`;
 };
+//hero
+function Hero(player) {
+  Humanoid.call(this, player);
+  if (this.healthPoints <= 0) {
+    this.destroy();
+  }
+}
+Hero.prototype = Object.create(Humanoid.prototype);
+Hero.prototype.slash = function(player) {
+  return (player.healthPoints = -2);
+};
+//villan
+function Villan(player) {
+  Humanoid.call(this, player);
+  if (this.healthPoints <= 0) {
+    this.destroy();
+  }
+}
+Villan.prototype = Object.create(Humanoid.prototype);
+Villan.prototype.stab = function(player) {
+  return (player.healthPoints = -2);
+};
 /*
  * Inheritance chain: GameObject -> CharacterStats -> Humanoid
  * Instances of Humanoid should have all of the same properties as CharacterStats and GameObject.
@@ -64,7 +86,7 @@ Humanoid.prototype.greet = function() {
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
-const mage = new Humanoid({
+const mage = new Hero({
   createdAt: new Date(),
   dimensions: {
     length: 2,
@@ -78,7 +100,7 @@ const mage = new Humanoid({
   language: "Common Tongue"
 });
 
-const swordsman = new Humanoid({
+const swordsman = new Villan({
   createdAt: new Date(),
   dimensions: {
     length: 2,
